@@ -20,6 +20,6 @@ I ended up asking Claude for this, when I googled this I mainly found stack over
 ## Starting off
 I started by just making a code that will calculate the distance the ball travels in `t` seconds using the kinematic equation for displacement: 
 ~~~math
-s=ut+0.5a(t^2)
+s=ut+(1/2)a(t^2)
 ~~~
 
