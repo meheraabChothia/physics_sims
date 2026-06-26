@@ -19,7 +19,20 @@ I ended up asking Claude for this, when I googled this I mainly found stack over
 
 ## Starting off
 I started by just making a code that will calculate the distance the ball travels in `t` seconds using the kinematic equation for displacement: 
+
 ~~~math
-s=ut+(1/2)a(t^2)
+s=ut+0.5a(t^2)
 ~~~
+
+This will calculate the distance travelled by the ball at any time `t` in seconds. Since we know that the value of `u` is 0 and the value of `a` is the acceleration due to gravity which is `9.81`.
+
+Now I need to be able to display this in some way. 
+
+After looking into what matplotlib is used for vis-a-vis animations, I mean it might do the job? It's all pretty complicated for me because I have never used matplotlib (called `plt` from now on) before.  
+
+But if I'm being honest I also wanted to figure out how these GUI display thingies are built. Now if I want to make more complex simulation stuff, I probably will want to use some existing libraries or software, but let's just give making our own display application thingy (I don't know what to call it) a try.  
+
+But where do I start?
+
+## Display Window
 

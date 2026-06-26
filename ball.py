@@ -1,3 +1,8 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+
 G = 9.81
 H = 1000  # meters
 
@@ -18,6 +23,19 @@ def loop():
         input()
 
 
+def plotter():
+    # How tf do I verify this??
+    x = []
+    y = []
+    for i in range(100):
+        # print(f"Position at {i} seconds: {calculate_position(i)}")
+        x.append(calculate_position(i))
+        y.append(i)
+
+    plt.plot(x, y)
+    plt.savefig('ball.png')
+
+
 def time():
     import math
     t = math.sqrt(2 * 1000 / 9.81)
@@ -30,4 +48,4 @@ def main():
 
 
 if __name__ == "__main__":
-    time()
+    plotter()
