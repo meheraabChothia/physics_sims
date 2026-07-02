@@ -35,4 +35,67 @@ But if I'm being honest I also wanted to figure out how these GUI display thingi
 But where do I start?
 
 ## Display Window
+I tried to search this up. The stuff I found was a little scary. This stuff is understandably really complicated, and it's gonna take a long time to actually make something that works. I did find a book that I'll probably go through and see if it helps, [Computer Graphics by Gabriel Gambetta](https://gabrielgambetta.com/computer-graphics-from-scratch/index.html). But we should definitely use a pre existing graphics software or library for now. I think instead of matplotlib I'll use Pygame. At least give it a shot because matplotlib seems to be more complex.  
 
+I ended up on the [Pygame docs front page](https://www.pygame.org/docs/index.html), which contained a quick start program. The program was basically a circle on a blank window, that you can control with WASD. I ended up using this code as a base. Basically it had everything I needed to get started with Pygame. It showed me how to make the window, add a background to it, make a circle, position it on the window and move the circle. The only thing I needed to add to it was replace the WASD controls with the displacement calculations from the Kinematic Equations and continuously update the y-axis position of the ball.  
+
+The next steps involved tinkering with the program. I changed some of the values on the ball's starting position and figured out that the top left corner of my screen was the origin of the entire window (0,0). I adjusted the position of the ball to start close to the top of the window. Now I need to make it fall. My implementation of the kinematic equation is to calculate the distance it would travel from rest in a given time frame. So I decided to just update the y-axis position continuously with the new value.  
+In the quick start program they have a variable called `dt`. The value for `dt` from what I understand is basically the time between frames. In this case it's 0.016 seconds. So I calculate how far the ball would have travelled after every multiple of 0.016 seconds. So the distance it travels after 0.016 seconds then after 0.032 seconds, and so on. A slight problem with this is that we are basically adding the value of `dt` after every `dt` seconds and calculating the position of the ball at that compounded total time. I know the way I'm explaining this might not make sense so I'll plug the code I have here:
+~~~python
+import pygame
+
+G = 9.81
+
+
+def calculate_position(time: float):
+    # time in seconds
+    dis = 0.5*G*(time**2)
+    return dis  # How much of the 1000 meters it has fallen
+
+
+def main():
+    pygame.init()
+    screen = pygame.display.set_mode((1920, 1080))
+    clock = pygame.time.Clock()
+    running = True
+    dt = 0
+    time = 0
+    line_left = [0, screen.get_height()-100]
+    line_right = [screen.get_width(), screen.get_height()-100]
+
+    player_pos = pygame.Vector2(screen.get_width()/2, 0)
+
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        screen.fill('black')
+
+        pygame.draw.circle(screen, 'white', player_pos, 5)
+        pygame.draw.line(screen, 'white', line_left, line_right, 5)
+
+        pygame.display.flip()
+        if player_pos.y < screen.get_height()-110:
+            print(player_pos.y)
+            player_pos.y = calculate_position(time)
+        dt = clock.tick(60)/1000
+        time += dt
+    pygame.quit()
+
+
+if __name__ == '__main__':
+    main()
+~~~
+
+The was a rough attempt to try stuff out. I'm just adding and changing values here and there to see how it affects the stuff on the display window. I also tried to add a line to the window and it worked.  
+
+Now this rough implementation was successful, the ball falls at an accelerating pace until it goes out of the bounds of the window. So it works.
+
+After this I tried to clean up the code and make it more useable. While doing that I was trying to think of a way to make the calculations of the ball's movement more dynamic.  
+
+Basically I want the ball to maintain it's own state separately. This should also be true for any other objects that will be added to the simulation. Next, pygame will poll all available objects for their current state. Each object, our ball in this case will be told that it should calculate it's next state. In the case of our ball, it should use it's current state to calculate what the it's next state in the given time frame should be. This time frame will be given to it by pygame. It should then tell pygame how and where it should be moved.  
+
+But to make this happen I need to separate the creation logic for objects from pygame's screen loop.  
+What I ended up doing is make a function that adds any object I want to create to a list. This will have the necessary details for each object that are required to make them, so for a circle it will be the position of the center, for a line it will be the coordinates of each end, and so on.  
+And now I'll have to create something that will detect what I want to create and call the necessary function for me, but for now this list is designed to only accept circles. So pygame polls this list and creates 'n' circles for us. 

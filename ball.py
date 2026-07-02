@@ -18,8 +18,10 @@ def calculate_position(time: float):
 
 def loop():
     # How tf do I verify this??
-    for i in range(100):
-        print(f"Position at {i} seconds: {calculate_position(i)}")
+    time = 0
+    while (True):
+        print(calculate_position(time))
+        time += 0.016
         input()
 
 
@@ -48,4 +50,4 @@ def main():
 
 
 if __name__ == "__main__":
-    plotter()
+    loop()
