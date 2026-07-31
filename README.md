@@ -99,3 +99,62 @@ Basically I want the ball to maintain it's own state separately. This should als
 But to make this happen I need to separate the creation logic for objects from pygame's screen loop.  
 What I ended up doing is make a function that adds any object I want to create to a list. This will have the necessary details for each object that are required to make them, so for a circle it will be the position of the center, for a line it will be the coordinates of each end, and so on.  
 And now I'll have to create something that will detect what I want to create and call the necessary function for me, but for now this list is designed to only accept circles. So pygame polls this list and creates 'n' circles for us. 
+
+All of this is hard coded for now, I'll think about making it more reusable later on, but just to test things out I'm going to go ahead with this.
+
+The code looks something like this:
+The function to add the circles to a list looks like this:
+~~~python
+def create_n_circles(self, n=3):
+  """
+  For now creating circles with set positions.
+  """
+  self.objects = []
+  for i in range(n):
+    self.objects.append([Circle(), pygame.Vector2(
+      self.screen.get_width()/2-((i+1)*20), 10)])
+~~~
+
+And the function that polls this list and creates all the objects:
+~~~python
+def draw_circle(self):
+  # pygame.draw.circle(self.screen, 'white', self.circle_coords, 5)
+  for i in self.objects:
+    pygame.draw.circle(self.screen, 'white', i[1], 5)
+~~~
+This should result in 'n' circles that are all 20 pixels apart.
+
+And for movement each object has it's own class that currently does 2 things:
+- Sets it's initial state.
+- Calculates it's next state in a given time frame and updates it's current state. This also returns it's new position to pygame so that it can then move it.
+
+The code looks something like this:
+~~~python
+class Circle:
+    def __init__(self):
+        self.mass = None
+        self.initial_vel_x = 0
+        self.initial_vel_y = 0
+        self.acceleration = G
+        self.force_vectors = {'x': 0, 'y': -1}
+
+    def calculate_position(self, time: float):
+        displacement_y = (self.initial_vel_y*time)+0.5 * \
+            self.acceleration*self.force_vectors['y']*(time**2)
+
+        self.initial_vel_y = self.initial_vel_y + \
+            self.acceleration*self.force_vectors['y']*time
+
+        displacement_x = (self.initial_vel_x*time)+0.5 * \
+            self.acceleration*self.force_vectors['x']*(time**2)
+
+        self.initial_vel_x = self.initial_vel_x + \
+            self.acceleration*self.force_vectors['x']*time
+
+        return [displacement_x, displacement_y]
+~~~
+Again this a rough implementation of what I want there are probably some glaringly obvious issues in my equations or method of making this work, so that is something I need to properly look into and make sure I'm not messing things up here.  
+
+The result looks like this:
+![demo](./assets/demo.webm)
+
