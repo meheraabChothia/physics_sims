@@ -156,5 +156,6 @@ class Circle:
 Again this a rough implementation of what I want there are probably some glaringly obvious issues in my equations or method of making this work, so that is something I need to properly look into and make sure I'm not messing things up here.  
 
 The result looks like this:
-![demo](./assets/demo.png)
+![demo](./assets/demo.gif)
+
 
