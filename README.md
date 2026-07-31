@@ -158,4 +158,9 @@ Again this a rough implementation of what I want there are probably some glaring
 The result looks like this:
 ![demo](./assets/demo.gif)
 
+## Collisions
+Now the balls move as they should, which is great but once they reach the edge of the screen they don't stop moving. Along with that if I want the balls to move in non-parallel directions there will be instances where the balls will collide, and right now the balls will just go through each other and leave the screen again.  
+I'll leave this post here for now, but the next thing I'll work on is keeping the balls inside the screen at all times. And work on inter object collisions after that.
 
+## Github Repo:
+[physics_sims](https://github.com/meheraabChothia/physics_sims)
