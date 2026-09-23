@@ -509,6 +509,15 @@ wheels = [
 ]
 
 [[package]]
+name = "perlin-noise"
+version = "1.14"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/4e/0e/6b92d7ff48004fda3eb2343cd305d3e5c68fe98f31b2d3bbde76201a18f2/perlin_noise-1.14.tar.gz", hash = "sha256:21ab04c26d728904234e38b1354ba2dcc137847d82e8c331f84d0e11a1a4152e", size = 3414, upload-time = "2025-04-12T12:03:14.857Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6d/35/8747bfef07ac48450f78d167e5c298ca31306c43699841b0b1e805f2fdd4/perlin_noise-1.14-py3-none-any.whl", hash = "sha256:3ecfae6437860c3e51d5f4bac0a7ceea1b9193a4a83c6d775edd5d47a918bc62", size = 4593, upload-time = "2025-04-12T12:03:13.568Z" },
+]
+
+[[package]]
 name = "pexpect"
 version = "4.9.0"
 source = { registry = "https://pypi.org/simple" }
@@ -527,7 +536,9 @@ source = { virtual = "." }
 dependencies = [
     { name = "ipykernel" },
     { name = "matplotlib" },
+    { name = "perlin-noise" },
     { name = "pygame" },
+    { name = "pyglet" },
     { name = "pyqt6" },
 ]
 
@@ -535,7 +546,9 @@ dependencies = [
 requires-dist = [
     { name = "ipykernel", specifier = ">=7.3.0" },
     { name = "matplotlib", specifier = ">=3.11.0" },
+    { name = "perlin-noise", specifier = ">=1.14" },
     { name = "pygame", specifier = ">=2.6.1" },
+    { name = "pyglet", specifier = ">=2.1.16" },
     { name = "pyqt6", specifier = ">=6.11.0" },
 ]
 
@@ -686,6 +699,15 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/85/b5/aa23aa2e70bcba42c989c02e7228273c30f3b44b9b264abb93eaeff43ad7/pygame-2.6.1-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ef07c0103d79492c21fced9ad68c11c32efa6801ca1920ebfd0f15fb46c78b1c", size = 13951197, upload-time = "2024-09-29T11:40:06.785Z" },
     { url = "https://files.pythonhosted.org/packages/a6/06/29e939b34d3f1354738c7d201c51c250ad7abefefaf6f8332d962ff67c4b/pygame-2.6.1-cp313-cp313-win32.whl", hash = "sha256:3acd8c009317190c2bfd81db681ecef47d5eb108c2151d09596d9c7ea9df5c0e", size = 10249309, upload-time = "2024-09-29T11:10:23.329Z" },
     { url = "https://files.pythonhosted.org/packages/7e/11/17f7f319ca91824b86557e9303e3b7a71991ef17fd45286bf47d7f0a38e6/pygame-2.6.1-cp313-cp313-win_amd64.whl", hash = "sha256:813af4fba5d0b2cb8e58f5d95f7910295c34067dcc290d34f1be59c48bd1ea6a", size = 10620084, upload-time = "2024-09-29T11:48:51.587Z" },
+]
+
+[[package]]
+name = "pyglet"
+version = "2.1.16"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/8d/af/72a0c4fc95339ec590f441a591143e04acb27b2c94845735809c1630ade6/pyglet-2.1.16.tar.gz", hash = "sha256:ca90ee05532ced8330b8a8087ac2a7b69589b7fa7fb67f85aabe24aaf4ae42c0", size = 6598246, upload-time = "2026-08-01T01:32:35.895Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/23/93/b81e304f8954876fed84c5afffe83d2c1c0ceed064d5003b87fbfe9f9076/pyglet-2.1.16-py3-none-any.whl", hash = "sha256:27f9cabf97a64b15d335cf70d9e8979bbab5f84a9900a058206bcd3a2de341ae", size = 1037857, upload-time = "2026-08-01T01:32:30.566Z" },
 ]
 
 [[package]]

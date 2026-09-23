@@ -12,16 +12,16 @@ class Circle:
         self.force_vectors = {'x': 0, 'y': -1}
 
     def calculate_position(self, time: float):
-        displacement_y = (self.initial_vel_y*time)+0.5 * \
+        displacement_y = (self.current_vel_y*time)+0.5 * \
             self.acceleration*self.force_vectors['y']*(time**2)
 
-        self.initial_vel_y = self.initial_vel_y + \
+        self.current_vel_y = self.current_vel_y + \
             self.acceleration*self.force_vectors['y']*time
 
-        displacement_x = (self.initial_vel_x*time)+0.5 * \
+        displacement_x = (self.current_vel_x*time)+0.5 * \
             self.acceleration*self.force_vectors['x']*(time**2)
 
-        self.initial_vel_x = self.initial_vel_x + \
+        self.current_vel_x = self.current_vel_x + \
             self.acceleration*self.force_vectors['x']*time
 
         return [displacement_x, displacement_y]

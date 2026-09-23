@@ -25,7 +25,7 @@ class ScreenManager:
 
     def set_screen(self):
         # self.screen.fill('black')
-        self.screen.fill('white')
+        self.screen.fill('black')
 
     def movements(self):
         for object in self.objects:
@@ -99,12 +99,17 @@ def walker_main():
                 sm.running = False
 
         # sm.screen.set_at(wk.mouse_record_follow(), (255, 255, 255))
-        sm.screen.set_at(wk.mouse_move(), (0, 0, 0))
+        sm.screen.set_at(wk.mouse_move(), (255, 255, 255))
 
         pygame.display.flip()
         sm.dt = sm.clock.tick(60)/1000
 
     pygame.quit()
+
+
+def shade_screen():
+    sm = ScreenManager()
+    sm.set_screen()
 
 
 if __name__ == "__main__":
