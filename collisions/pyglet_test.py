@@ -5,6 +5,7 @@ from typing import Self
 window = pyglet.window.Window()
 WIDTH = window.width
 HEIGHT = window.height
+LINE_COLOR = (255, 255, 255)
 
 batch = pyglet.graphics.Batch()
 
@@ -12,7 +13,7 @@ batch = pyglet.graphics.Batch()
 def update(dt, object):
     for obj in object:
         obj.update_state(dt)
-        obj.calculate_lom
+        obj.calculate_lom()
         # input()
 
 
@@ -32,6 +33,50 @@ class Vector:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+
+
+class Line:
+    def __init__(self, point1: Point, point2: Point, thickness=2):
+        self.p1 = point1
+        self.p2 = point2
+        self.thickness = thickness
+        self.create_object()
+        self.calculate_equation()
+
+    def create_object(self):
+        self.obj = pyglet.shapes.Line(
+            x=self.p1.x, y=self.p1.y,
+            x2=self.p2.x, y2=self.p2.y,
+            thickness=self.thickness, color=LINE_COLOR, batch=batch)
+
+    def calculate_equation(self):
+        temp_vector = Vector(self.p2.x-self.p1.x, self.p2.y-self.p1.y)
+        self.eq = ParamtericLine(self.p1, temp_vector)
+
+
+class oldWall:
+    def __init__(self):
+        self.left_wall = ParamtericLine(Point(0, 0), Vector(0, 1))
+        self.right_wall = ParamtericLine(
+            Point(WIDTH, 0), Vector(0, 1))
+
+        self.top_wall = ParamtericLine(Point(0, HEIGHT), Vector(1, 0))
+        self.bottom_wall = ParamtericLine(Point(0, 0), Vector(1, 0))
+        self.create_walls()
+
+    def create_walls(self):
+        pass
+
+
+class Wall:
+    def __init__(self):
+        self.left_wall = Line(Point(0, 0), Point(0, HEIGHT))
+
+        self.right_wall = Line(Point(WIDTH, 0), Point(WIDTH, HEIGHT))
+
+        self.top_wall = Line(Point(0, HEIGHT), Point(WIDTH, HEIGHT))
+
+        self.bottom_wall = Line(Point(0, 0), Point(WIDTH, 0))
 
 
 class ParamtericLine:
@@ -81,15 +126,9 @@ class ParamtericLine:
 
         return (Point(x, y))
 
-
-class Wall:
-    def __init__(self):
-        self.left_wall = ParamtericLine(Point(0, 0), Vector(0, 1))
-        self.right_wall = ParamtericLine(
-            Point(WIDTH, 0), Vector(0, 1))
-
-        self.top_wall = ParamtericLine(Point(0, HEIGHT), Vector(1, 0))
-        self.bottom_wall = ParamtericLine(Point(0, 0), Vector(1, 0))
+    def print_equation(self):
+        print(f"x = {self.p.x} + t{self.d.x}")
+        print(f"y = {self.p.y} + t{self.d.y}")
 
 
 class Circle:
@@ -100,6 +139,7 @@ class Circle:
         self.acceleration = Vector(0, 0)
         self._obj_details(i_x, i_y)
         self.create_object()
+        self.calculate_lom()
 
     def _obj_details(self, i_x, i_y):
         self.pos = Point(i_x, i_y)
@@ -125,14 +165,7 @@ class Circle:
         self.obj.y += dis_y
 
     def calculate_lom(self):
-        self.lom = ParamtericLine(self.pos, self.velocity)
-
-        walls = Wall()
-        intersect = self.lom.solve_equations(walls.left_wall)
-        # print(f"Point of intersect with left wall: {
-        # intersect.x}, {intersect.y}")
-        self.view_line = pyglet.shapes.Line(x=self.pos.x, y=self.pos.y, x2=intersect.x,
-                                            y2=intersect.y, thickness=2, color=(255, 255, 255), batch=batch)
+        self.eq = ParamtericLine(self.pos, self.velocity)
 
 
 def main():
@@ -143,8 +176,19 @@ def main():
     object.append(circle)
     object.append(circle2)
 
+    walls = Wall()
+    lines = []
+    lines.append(walls.left_wall)
+    lines.append(walls.right_wall)
+    lines.append(walls.top_wall)
+    lines.append(walls.bottom_wall)
+    lines.append(circle.eq)
+    lines.append(circle2.eq)
     # circle.calculate_lom()
     # circle2.calculate_lom()
+    #
+    for i in lines:
+        i.eq.print_equation()
 
     pyglet.clock.schedule_interval(update, 1/120, object)
 

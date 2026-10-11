@@ -1,1 +1,2 @@
 - Calculate which wall will the ball collide with first.
+  - Have a list of lines a particular line will be solved against.

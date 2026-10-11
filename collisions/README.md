@@ -98,3 +98,7 @@ Parametric lines work.
 
 ## Testing this out to calculate wall only collisions:
 ### First I want to calculate which wall the ball will collide with first. 
+- To do this I should probably start with creating a similar class for Lines. Just like what we did for Circles.
+- So I'll start with initialising all of the necessary values needed to start with the creation of a line and then I'll make methods to draw the line and figure the rest out later on. 
+
+- So now when I create a Parametric line, it basically uses the `Line Class` as an object for it's line. I understand that this is a little stupid when it comes to abstractions but this feels a little neater.
